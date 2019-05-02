@@ -56,6 +56,7 @@ class AddClient extends Component {
                   value={this.state.firstName}
                 />
               </div>
+              
               <div className="form-group">
                 <label htmlFor="lastName">Last Name
                 </label>
@@ -64,9 +65,9 @@ class AddClient extends Component {
                   type="text"
                   name="lastName"
                   minLength="2"
-
                 />
               </div>
+
               <div className="form-group">
                 <label htmlFor="email">Email
                 </label>
@@ -78,6 +79,7 @@ class AddClient extends Component {
                   value={this.state.email}
                 />
               </div>
+
               <div className="form-group">
                 <label htmlFor="phone">Phone
                 </label>
