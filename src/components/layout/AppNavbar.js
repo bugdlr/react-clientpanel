@@ -25,7 +25,7 @@ class AppNavbar extends Component {
     e.preventDefault();
 
     const { firebase } = this.props;
-    
+
     firebase.logout();
   }
 
@@ -33,6 +33,8 @@ class AppNavbar extends Component {
   render() {
     const { isAuthenticated } = this.state;
     const { auth } = this.props;
+
+    const { allowRegistration } = this.props.settings;
 
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
@@ -51,6 +53,21 @@ class AppNavbar extends Component {
                   Dashboard
                 </Link>
               </li>) : null }
+              {allowRegistration && !isAuthenticated ? (
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to="/login" className="nav-link">
+                    Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/register" className="nav-link">
+                    Register
+                    </Link>
+                  </li>
+                </ul>
+
+              ) : null}
             </ul>
             {isAuthenticated ? (
               <ul className="navbar-nav ml-auto">
@@ -58,6 +75,11 @@ class AppNavbar extends Component {
                   <a href="#!" className="nav-link">
                     { auth.email }
                   </a>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/settings">
+                    Settings
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <a href="#!" className="nav-link" onClick={this.onLogoutClick}>
@@ -77,12 +99,14 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
   firebase: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 }
 
 export default compose(
   firebaseConnect(),
   connect((state, props) => ({
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    settings: state.settings
   }))
 )(AppNavbar);
